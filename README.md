@@ -125,4 +125,30 @@ ssh -T git@github.com
 
 
 ```
+### 定義版本號
+版本號通常遵循 語意化版本控制（Semantic Versioning, SemVer） 的規範，格式為：主版本號.次版本號.修訂號（MAJOR.MINOR.PATCH）
+#### 使用 Git Tag 標示版本
+``` bash
+git tag -a v1.0.0 -m "Release version 1.0.0"
+git push origin v1.0.0
+
+
+```
+#### 建立 Release Branch
+``` bash
+git checkout -b release/v1.0.0
+git push origin release/v1.0.0
+
+```
+#### 在 GitHub 上建立 Release
+GitHub 提供了 Releases 功能，可以將 Tag 與二進制檔案（例如編譯後的程式）和發布說明結合
+步驟：
+```
+1. 進入 GitHub 倉庫的 Releases 頁面。
+2. 點擊 Draft a new release。
+3. 選擇剛剛建立的 Tag（例如 v1.0.0）。
+4. 填寫發布標題和說明。
+5. 如果需要，上傳二進制檔案。
+6. 點擊 Publish release。
+```
 
