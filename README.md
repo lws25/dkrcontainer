@@ -60,6 +60,8 @@ git push origin main
 # git pull 是 git fetch + git merge 的組合
 git pull origin main
 
+git pull --rebase
+
 ```
 
 #### 使用 rebase
@@ -89,6 +91,24 @@ git push origin feature-branch
 
 ```
 
+### 如果你在 git add 之後又修改了檔案，並且希望將這些修改恢復到上一次 git add 的狀態（即暫存區中的狀態），可以使用以下方法
+``` bash
+# 1. 恢復單一檔案
+git restore <file>
+git checkout -- <file>
+
+# 2. 恢復所有檔案
+git restore .
+
+# 3. 恢復到特定 Commit 的狀態
+git restore --source <commit-hash> <file>
+# 恢復所有檔案
+git restore --source <commit-hash> .
+
+
+```
+
+
 ## 認證
 ### 1. 使用 Personal Access Token (PAT)
 什麼是 Personal Access Token？
@@ -109,6 +129,12 @@ Personal Access Token（PAT）是一個替代密碼的令牌，用於進行 Git 
 ```
 Username: your_github_username
 Password: your_personal_access_token
+
+# 方便時用PAT
+export GITHUB_PATOKEN=ghp_1234567890abcdef1234567890abcdef1234
+git remote -v
+git remote set-url origin https://$GITHUB_PATOKEN@github.com/lws25/dkrcontainer.git
+
 ```
 
 ### 2. 使用 SSH 認證
@@ -151,4 +177,33 @@ GitHub 提供了 Releases 功能，可以將 Tag 與二進制檔案（例如編�
 5. 如果需要，上傳二進制檔案。
 6. 點擊 Publish release。
 ```
+
+### 不要對已推送的 Commit 進行 Rebase
+1. 具體影響
+```
+遠端 main: A---B---C
+本地 main: A---B---C---D---E
+# 如果你對 D 和 E 進行 Rebase，並強制推送：
+遠端 main: A---B---C---D'---E'
+```
+2. 協作者需要重新整理分支
+```
+git fetch origin
+git reset --hard origin/main
+```
+### 如何避免對已推送的 Commit 進行 Rebase？
+```
+1. 使用 git merge 代替 Rebase
+如果你需要整合分支，可以使用 git merge，它會保留歷史記錄並產生一個合併 Commit。
+
+2. 在 Rebase 前確認 Commit 狀態
+使用 git log 或 git status 確認哪些 Commit 已經推送到遠端。
+如果 Commit 已經推送，避免對其進行 Rebase。
+
+3. 使用 git pull --rebase 同步分支
+當你需要同步遠端分支時，可以使用 git pull --rebase，它會將本地的 Commit 重新應用到遠端分支的最新 Commit 之後，而不是產生一個合併 Commit。
+
+```
+
+Modified by local editor!!!
 
