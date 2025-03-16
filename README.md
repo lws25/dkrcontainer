@@ -25,7 +25,8 @@ git remote set-url origin git@github.com:username/my-project.git
 
 ```
 
-### 3. 從 GitHub 抓取最新更新並合併到目前的 Branch
+### 從 GitHub 抓取最新更新並合併到目前的 Branch, 
+#### 使用 fetch then merge
 ``` bash
 # 1. 確保目前 Branch 是乾淨的
 git status
@@ -46,11 +47,47 @@ git merge origin/main
 
 # 4. Push 合併後的更新到遠端
 git push origin main
-
+# 或設定本地分支與遠端分支建立追蹤關係（Tracking Relationship）
+#  git push --set-upstream origin main
+# 修改本地分支的追蹤關係
+# git branch --set-upstream-to=origin/main
+# git branch -vv # 檢查本地分支的追蹤關係
 
 ```
 
+#### 使用pull
+``` bash
+# git pull 是 git fetch + git merge 的組合
+git pull origin main
 
+```
+
+#### 使用 rebase
+``` bash
+# 切換到 feature-branch, 將 feature-branch Rebase 到 main
+git checkout feature-branch
+
+# 執行 Rebase
+git rebase main
+
+# 如果有衝突，解決衝突後繼續
+git add <file>
+git rebase --continue
+# git rebase --abort
+
+# 對最近的 3 個 Commit 進行互動式 Rebase
+git rebase -i HEAD~3
+
+```
+
+## 透過 Pull Request 提交變更
+``` bash
+git checkout -b feature-branch
+git add .
+git commit -m "Your commit message"
+git push origin feature-branch
+
+```
 
 ## 認證
 ### 1. 使用 Personal Access Token (PAT)
