@@ -80,8 +80,14 @@ git rebase -i HEAD~3
 
 ```
 
+## 透過 Pull Request 提交變更
+``` bash
+git checkout -b feature-branch
+git add .
+git commit -m "Your commit message"
+git push origin feature-branch
 
-
+```
 
 ## 認證
 ### 1. 使用 Personal Access Token (PAT)
