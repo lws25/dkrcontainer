@@ -144,6 +144,9 @@ ssh-keygen -t ed25519 -C "your_email@example.com"
 # rsa 版本
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -f $HOME/.ssh/lws25_rsa_github
+ssh-keygen -t ed25519 -C "vincent25@example.com" -f $HOME/.ssh/lws25_ed25519_github
+
 # 測試 SSH 連線
 # 登入 GitHub，進入 Settings > SSH and GPG keys，點擊 New SSH key。 將公鑰內容貼上並保存。
 cat ~/.ssh/id_ed25519.pub
